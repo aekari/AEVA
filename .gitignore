@@ -1,0 +1,28 @@
+# Ignore virtual environment directory
+env/
+venv/
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore build artifacts
+build/
+dist/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore system files (e.g., macOS)
+.DS_Store
+
+# Ignore IDE specific settings (e.g., VSCode)
+.vscode/
+.idea/
+
+# Other specific files to ignore
+test_import.py
+test_speech_recognition.py
+test_voice_types.py
