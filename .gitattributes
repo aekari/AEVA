@@ -1,0 +1,12 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Explicitly declare text files you want to always normalize and convert to native line endings on checkout.
+*.md text
+*.py text
+
+# Ensure bash scripts have LF endings in all environments
+*.sh text eol=lf
+
+# Ensure Windows batch scripts have CRLF endings in all environments
+*.bat text eol=crlf
