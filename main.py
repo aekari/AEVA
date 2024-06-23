@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-import openai
+from openai import OpenAI
 import pyttsx3
 import speech_recognition as sr
 import schedule
@@ -12,54 +12,21 @@ from plyer import notification
 load_dotenv()
 
 # Initialize OpenAI client with the API key
-openai.api_key = os.getenv('OPENAI_API_KEY')
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 # Check if the API key is loaded correctly
-if not openai.api_key:
+if not client.api_key:
     raise ValueError("OpenAI API key is missing. Please check your .env file.")
 
 def get_chatgpt_response(prompt):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt}
         ]
     )
-    return response['choices'][0]['message']['content']
-
-def test_openai():
-    prompt = "Hello, world!"
-    response = get_chatgpt_response(prompt)
-    print("OpenAI response:", response)
-
-def test_pyttsx3():
-    engine = pyttsx3.init()
-    engine.say("Hello, world!")
-    engine.runAndWait()
-
-def test_schedule():
-    def job():
-        print("Scheduled job executed.")
-    schedule.every(1).minutes.do(job)
-    while True:
-        schedule.run_pending()
-
-def test_requests():
-    response = requests.get('https://www.google.com')
-    print("Requests status code:", response.status_code)
-
-def test_beautifulsoup4():
-    response = requests.get('https://www.google.com')
-    soup = BeautifulSoup(response.text, 'html.parser')
-    print("BeautifulSoup title:", soup.title.string)
-
-def test_plyer():
-    notification.notify(
-        title='Test Notification',
-        message='Hello, world!',
-        timeout=10
-    )
+    return response.choices[0].message.content
 
 def cli():
     print("Welcome to AEVA! Type 'exit' to quit.")
@@ -73,10 +40,3 @@ def cli():
 
 if __name__ == "__main__":
     cli()
-    # Uncomment to test other functionalities
-    # test_openai()
-    # test_pyttsx3()
-    # test_requests()
-    # test_beautifulsoup4()
-    # test_plyer()
-    # test_schedule()
