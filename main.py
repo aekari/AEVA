@@ -11,14 +11,12 @@ from plyer import notification
 # Load environment variables from .env file
 load_dotenv()
 
-# Now you can access the variables using os.getenv
-openai_api_key = os.getenv('OPENAI_API_KEY')
-openweathermap_api_key = os.getenv('OPENWEATHERMAP_API_KEY')
-google_maps_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
-astronomy_api_key = os.getenv('ASTRONOMY_API_KEY')
+# Initialize OpenAI client with the API key
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
-# Initialize OpenAI client
-openai.api_key = openai_api_key
+# Check if the API key is loaded correctly
+if not openai.api_key:
+    raise ValueError("OpenAI API key is missing. Please check your .env file.")
 
 def get_chatgpt_response(prompt):
     response = openai.ChatCompletion.create(
@@ -64,7 +62,7 @@ def test_plyer():
     )
 
 def cli():
-    print("Welcome to AEVA CLI! Type 'exit' to quit.")
+    print("Welcome to AEVA! Type 'exit' to quit.")
     while True:
         user_input = input("You: ")
         if user_input.lower() in ["exit", "quit"]:
